@@ -1,0 +1,61 @@
+def main():
+
+    # Asks user to input their starting Axiom
+    axiom = input('Enter starting axiom (w): ')
+
+    # Keep asking user to input their Production rules
+    # minimum amount is 1 rule
+    production_rule_num = 1 
+    while True:
+        production_rule = input(f'Enter production rule #{production_rule_num} (Input 0 if no more rules): ')
+        
+        # Check if there are no more production rules to be entered
+        if production_rule == '0':
+            break
+
+        # Set key= initial symbol(s) to be replaced  
+        # and set value= new symbol(s) you like to replace it with
+        key, value = production_rule.split('->')
+
+        # Represents our dictionary of rules
+        DICT_OF_RULES[key] = value
+
+        # For aesthetic purposes to help guide the future user input
+        production_rule_num += 1
+
+    # Asks user to input their number of iterations to apply their Production Rules   
+    iterations = int(input('Enter number of iterations n: '))
+
+    # Asks user to input the desired segment length that is created by Turtle 
+    segment_length = int(input('Enter segment length: '))
+
+    # Asks user to input Turtle's initial angle to start drawing towards
+    # Angle starts at 3 o'clock and moves in the counterclockwise direction
+    initial_angle = float(input('Enter initial angle: '))
+
+    # Asks user to input Turtle's draw_angle to use each time when turning right '+' or left '-'
+    draw_angle = float(input('Enter drawing angle: '))
+
+    # Create the whole L-System by applying all the rules the starting axiom
+    list_of_entire_L_system = apply_production_rules(axiom, iterations)  # axiom (initial string), nth iterations
+
+    # Initialize Turtle object
+    recursive_pen = create_pen(initial_angle)
+    # Initialize the background paper or window you'll be drawing on
+    window = turtle.Screen()  # create graphics window
+    # Set the color of that background
+    window.bgcolor('black')
+    # Set the size of that background
+    window.screensize(1000, 1000)
+
+    # Turn the list representing the entire L-system
+    # into an actual geometric drawing
+    draw_L_system(recursive_pen, list_of_entire_L_system[-1], segment_length, draw_angle)  # draw list_of_entire_L_system
+
+    # Ensures that the window that you are drawing in 
+    # doesn't immediately close after execution
+    window.exitonclick()
+
+# Calling main function
+if __name__ == "__main__":
+    main()
